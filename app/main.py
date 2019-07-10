@@ -39,6 +39,7 @@ def start():
             initialize your snake state here using the
             request's data if necessary.
     """
+    move()
     print(json.dumps(data))
 
     color = "#00FF00"
