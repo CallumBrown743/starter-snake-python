@@ -41,6 +41,8 @@ class Point:
         '''Calculate Manhattan distance to other point'''
         # TODO: Should use A* dist not Manhattan
         return abs(self.x - other.x) + abs(self.y - other.y)
+    def xydist(self,other):
+        return abs(self.x - other.x),  abs(self.y - other.y)
 
     def get(self, direction):
         '''get an adjacent point by passing a string'''
@@ -341,6 +343,17 @@ def move():
     # Set-up our board and snake and define its goals
     board = Board(data)
     snake = board.player
+    foods= board.food
+    min_dist= 1000
+    for food in foods:
+        dist= food.dist(snake)
+        if dist< min_dist:
+            apple= food
+
+    x_dist, y_dist = apple.xydist()
+
+
+
 
     directions= snake.valid_moves()
     direction = random.choice(directions)
