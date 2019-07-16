@@ -330,10 +330,15 @@ def static(path):
 @bottle.post('/start')
 def start():
     return {
-        "color": "#9932CC",
-        "headType": "",
-        "tailType": ""
+        "color": "#FF69B4",
+        "headType": "evil",
+        "tailType": "bolt"
     }
+
+
+def neural_network(right_blocked,left_blocked,up_bolcked,down_blocked,x_dist,y_dist):
+    
+
 
 
 @bottle.post('/move')
