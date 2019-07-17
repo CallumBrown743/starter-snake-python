@@ -1,19 +1,18 @@
 import bottle
 import os
 import random
+from utils import *
 from api import ping_response, start_response, move_response, end_response
 
 INF = 1000000000
 DEBUG = True
 
-def neural_network(right_blocked,left_blocked,up_bolcked,down_blocked,x_dist,y_dist):
-    
-
-    return 0
 
 ##set up code from https://github.com/Wyllan/battlesnake-python/blob/master/app/main.py
 def debug(message):
     if DEBUG: print(message)
+
+
 
 
 class Point:
