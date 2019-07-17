@@ -6,6 +6,11 @@ from api import ping_response, start_response, move_response, end_response
 INF = 1000000000
 DEBUG = True
 
+def neural_network(right_blocked,left_blocked,up_bolcked,down_blocked,x_dist,y_dist):
+    
+
+    return 0
+
 ##set up code from https://github.com/Wyllan/battlesnake-python/blob/master/app/main.py
 def debug(message):
     if DEBUG: print(message)
@@ -336,7 +341,8 @@ def start():
     }
 
 
-def neural_network(right_blocked,left_blocked,up_bolcked,down_blocked,x_dist,y_dist):
+
+
     
 
 
@@ -347,15 +353,11 @@ def move():
 
     # Set-up our board and snake and define its goals
     board = Board(data)
-    snake = board.player
+    snake_head = board.player.head
+    snake=board.player
     foods= board.food
-    min_dist= 1000
-    for food in foods:
-        dist= food.dist(snake)
-        if dist< min_dist:
-            apple= food
-
-    x_dist, y_dist = apple.xydist()
+    apple = snake_head.closest(foods)
+    x_dist, y_dist = snake_head.xydist(apple)
 
 
 
