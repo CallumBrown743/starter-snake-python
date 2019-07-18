@@ -5,6 +5,8 @@ https://theailearner.com/2018/04/19/snake-game-with-deep-learning-part-2/
 
 https://theailearner.com/2018/11/09/snake-game-with-genetic-algorithm/
 
+https://blog.coast.ai/lets-evolve-a-neural-network-with-a-genetic-algorithm-code-included-8809bece164
+
 # starter-snake-python
 
 A simple [Battlesnake AI](http://battlesnake.io) written in Python. 
