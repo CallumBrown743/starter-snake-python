@@ -1,6 +1,6 @@
 import bottle
 import os
-import random
+import random as rand
 from utils import *
 from api import ping_response, start_response, move_response, end_response
 
@@ -11,6 +11,7 @@ DEBUG = True
 ##set up code from https://github.com/Wyllan/battlesnake-python/blob/master/app/main.py
 def debug(message):
     if DEBUG: print(message)
+
 
 
 
@@ -222,11 +223,7 @@ class Board:
                     self.rec_flood_fill_with_snake_data(p.up(), visited, heads, tails) +
                     self.rec_flood_fill_with_snake_data(p.down(), visited, heads, tails))
 
-    def available_space(self, p):
-        '''Same as above but return a list of the points'''
-        # TODO: Lazy, should find a better way to achieve this.
-        visited = []
-        return self.rec_flood_fill2(p, visited)
+
 
     def rec_flood_fill2(self, p, visited):
         '''Same as above but returns a list of the points'''
@@ -248,13 +245,7 @@ class Board:
                 distances[str(point)] = distance
         return distances
 
-    def is_threatened_by_enemy(self, point):
-        '''Returns True if this point is in the path of an enemy'''
-        for enemy in self.enemies:
-            if enemy.length >= self.player.length:
-                if point in enemy.head.surrounding_four():
-                    return True
-        return False
+
 
     def a_star_path(self, start, goal):
         '''Return the A* path from start to goal. Adapted from wikipedia page
@@ -306,6 +297,7 @@ class Board:
                 if str_neighbor not in g_score:
                     g_score[str_neighbor] = INF
 
+
                 tentative_g_score = (g_score[str_current] +
                                      current.dist(neighbor))
                 if tentative_g_score >= g_score[str_neighbor]:
@@ -326,6 +318,9 @@ class Board:
         return total_path
 
 
+
+
+
 @bottle.route('/static/<path:path>')
 def static(path):
     return bottle.static_file(path, root='static/')
@@ -333,13 +328,13 @@ def static(path):
 
 @bottle.post('/start')
 def start():
+
     return {
+        "name" : "Buster",
         "color": "#FF69B4",
         "headType": "evil",
         "tailType": "bolt"
     }
-
-
 
 
     
@@ -348,23 +343,48 @@ def start():
 
 @bottle.post('/move')
 def move():
-    data = bottle.request.json
+    NN= Neural_Network()
 
+    data = bottle.request.json
     # Set-up our board and snake and define its goals
     board = Board(data)
     snake_head = board.player.head
     snake=board.player
     foods= board.food
     apple = snake_head.closest(foods)
-    x_dist, y_dist = snake_head.xydist(apple)
+    x_dist = snake_head.x-apple.x
+    y_dist=snake_head.y-apple.y
+    directions = snake.valid_moves()
+    down_blocked=1
+    up_blocked=1
+    right_blocked=1
+    lef_blocked = 1
+    if 'up' in directions:
+        up_blocked=0
+    if 'down' in directions:
+        down_blocked=0
+    if 'right' in directions:
+        right_blocked=0
+    if 'left' in directions:
+        left_blocked=0
+
+    X = np.array([snake_head.x, snake_head.y, x_dist, y_dist])
+    direction = NN.forward(X)
+    move_int = np.argmax(direction)
+    if move_int == 0:
+        move = 'up'
+    if move_int == 1:
+        move = 'right'
+    if move_int == 2:
+        move = 'down'
+    if move_int == 3:
+        move = 'left'
+
+    print(move)
 
 
 
-
-    directions= snake.valid_moves()
-    direction = random.choice(directions)
-
-    return move_response(direction)
+    return move_response(move)
 
 @bottle.post('/end')
 def end():
