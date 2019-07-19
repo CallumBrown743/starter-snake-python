@@ -14,8 +14,8 @@ def debug(message):
 
 
 
-
-
+#Declare Neural Network
+NN= Neural_Network()
 class Point:
     '''Simple class for points'''
 
@@ -343,7 +343,7 @@ def start():
 
 @bottle.post('/move')
 def move():
-    NN= Neural_Network()
+
 
     data = bottle.request.json
     # Set-up our board and snake and define its goals
@@ -368,7 +368,7 @@ def move():
     if 'left' in directions:
         left_blocked=0
 
-    X = np.array([snake_head.x, snake_head.y, x_dist, y_dist])
+    X = np.array([snake_head.x, snake_head.y, x_dist, y_dist,up_blocked,down_blocked,lef_blocked,right_blocked])
     direction = NN.forward(X)
     move_int = np.argmax(direction)
     if move_int == 0:

@@ -5,7 +5,7 @@ import numpy as np
 class Neural_Network(object):
   def __init__(self):
     #parameters
-    self.inputSize = 4
+    self.inputSize = 8
     self.outputSize = 4
     self.hiddenSize = 3
 
@@ -26,4 +26,17 @@ class Neural_Network(object):
     return 1/(1+np.exp(-s))
 
 
+
+
+def create_population(self, count):
+
+    #create a population of random neural networks
+    pop = []
+    for _ in range(0, count):
+        # Create a random network.
+        network = Neural_Network()
+        # Add the network to our population.
+        pop.append(network)
+
+    return pop
 
