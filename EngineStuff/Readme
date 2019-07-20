@@ -1,0 +1,7 @@
+1. Run the engine with "./engine server"
+
+2. Run the snake with "python main.py"
+
+3. Make sure the configuration in snake-config.json matches the snake(s) you're running
+
+4. Execute the loop-script.py file
