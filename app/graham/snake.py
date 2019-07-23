@@ -413,6 +413,8 @@ def run(port, w, q, b):
     global weights
     global queue
     global server
+    global movecount
+    movecount = 0
     queue = q
     weights = w
     print('running bottle')
@@ -422,4 +424,5 @@ def run(port, w, q, b):
     except Exception as e: 
         #import traceback
         #print(traceback.format_exc())
-        print(e)
+        #print(e)
+        ()

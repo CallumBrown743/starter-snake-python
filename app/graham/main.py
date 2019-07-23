@@ -22,8 +22,8 @@ q = queue.Queue()
 #run a game and return the fitness score
 def run_game(snake):
 	snake.start()
-	#response = subprocess.check_output(["engine", "create", "-c", "snake-config.json"])
-	#subprocess.call(["engine", "run", "-g", str(response)[10:46]])
+	response = subprocess.check_output(["engine", "create", "-c", "snake-config.json"])
+	subprocess.call(["engine", "run", "-g", str(response)[10:46]])
 	snake.join()
 	return(q.get())
 	
@@ -40,7 +40,6 @@ for i in range(new_population.shape[0]):
 #fit = run_game(threading.Thread(target=snake.run,args=(8080,new_population[1],q)))
 #print('fitness value of chromosome '+ str(i) +' :  ', fit)
 	fitness.append(fit)
-	
-print(fitness)
 
-print(123)
+print("Fitness values:")
+print(fitness)
