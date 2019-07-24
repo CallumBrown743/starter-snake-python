@@ -369,7 +369,7 @@ def move():
     if move_int == 3:
         move = 'left'
 		
-    print(move)
+    #print(move)
     global movecount
     movecount = movecount + 1
     return move_response(move)
@@ -417,10 +417,10 @@ def run(port, w, q, b):
     movecount = 0
     queue = q
     weights = w
-    print('running bottle')
+    #print('running bottle')
     server = MyWSGIRefServer(os.getenv('IP', '0.0.0.0'), port=os.getenv('PORT', port))
     try:
-        app.run(server=server)
+        app.run(server=server, quiet=True)
     except Exception as e: 
         #import traceback
         #print(traceback.format_exc())
