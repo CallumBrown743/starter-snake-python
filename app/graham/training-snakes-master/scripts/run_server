@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker pull sendwithus/battlesnake-server
+docker run -it --rm -p 3000:3000 sendwithus/battlesnake-server

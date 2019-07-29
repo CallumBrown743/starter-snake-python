@@ -20,7 +20,7 @@ def get_weights_from_encoded(individual):
 	return (W1.reshape(W1_shape[0], W1_shape[1]), W2.reshape(W2_shape[0], W2_shape[1]), W3.reshape(W3_shape[0], W3_shape[1]))
 
 def softmax(z):
-    s = np.exp(z.T) / np.sum(np.exp(z.T)).reshape(-1, 1)
+    s = np.exp(z.T) / np.sum(np.exp(z.T), axis=0).reshape(-1, 1)
     return s
 
 
