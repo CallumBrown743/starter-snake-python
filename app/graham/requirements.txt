@@ -1,0 +1,13 @@
+bottle==0.12.13
+certifi==2019.6.16
+chardet==3.0.4
+estimator==0.0.10
+gevent==1.3.6
+greenlet==0.4.14
+gunicorn==19.9.0
+idna==2.8
+nose==1.3.7
+numpy==1.16.4
+requests==2.22.0
+train==0.0.3
+urllib3==1.25.3

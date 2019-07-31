@@ -15,7 +15,7 @@ def debug(message):
 
 
 #Declare Neural Network
-NN= Neural_Network()
+
 class Point:
     '''Simple class for points'''
 
@@ -309,13 +309,6 @@ class Board:
                                          neighbor.dist(goal))
         return []
 
-    def reconstruct_path(self, came_from, current):
-        '''Get the path as a list from A*'''
-        total_path = [current]
-        while str(current) in came_from.keys():
-            current = came_from[str(current)]
-            total_path.append(current)
-        return total_path
 
 
 
@@ -343,34 +336,44 @@ def start():
 
 @bottle.post('/move')
 def move():
-
-
     data = bottle.request.json
     # Set-up our board and snake and define its goals
     board = Board(data)
     snake_head = board.player.head
-    snake=board.player
-    foods= board.food
+    snake = board.player
+    foods = board.food
     apple = snake_head.closest(foods)
-    x_dist = snake_head.x-apple.x
-    y_dist=snake_head.y-apple.y
+    x_dist = snake_head.x - apple.x
+    y_dist = snake_head.y - apple.y
     directions = snake.valid_moves()
-    down_blocked=1
-    up_blocked=1
-    right_blocked=1
+    down_blocked = 1
+    up_blocked = 1
+    right_blocked = 1
     lef_blocked = 1
     if 'up' in directions:
-        up_blocked=0
+        up_blocked = 0
     if 'down' in directions:
-        down_blocked=0
+        down_blocked = 0
     if 'right' in directions:
-        right_blocked=0
+        right_blocked = 0
     if 'left' in directions:
-        left_blocked=0
+        left_blocked = 0
+    # get the point on the enmey snake that is closest to us
+    enemy = board.enemies
+    tail_array = enemy.tail
+    danger_point = snake_head.closest(tail_array)
+    x_dang = snake_head.x - danger_point.x
+    y_dang = snake_head.y - danger_point.y
+    # findout if the enemy snake can eat us
+    tasty_snake = 0
+    if enemy.length >= snake.length:
+        tasty_snake = 1
 
-    X = np.array([snake_head.x, snake_head.y, x_dist, y_dist,up_blocked,down_blocked,lef_blocked,right_blocked])
-    direction = NN.forward(X)
-    move_int = np.argmax(direction)
+    X = np.array(
+        [snake_head.x, snake_head.y, x_dist, y_dist, up_blocked, down_blocked, lef_blocked, right_blocked, x_dang,
+         y_dang, tasty_snake])
+    #direction = nn.forward_propagation(X, weights)
+    move_int = np.argmax('left')
     if move_int == 0:
         move = 'up'
     if move_int == 1:
@@ -379,13 +382,6 @@ def move():
         move = 'down'
     if move_int == 3:
         move = 'left'
-
-    print(move)
-
-
-
-    return move_response(move)
-
 @bottle.post('/end')
 def end():
     return {}

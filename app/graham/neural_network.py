@@ -1,9 +1,9 @@
 import numpy as np
 
 #parameters
-inputsize = 8
+inputsize = 11
 outputsize = 4
-hiddensize1 = 9
+hiddensize1 = 12
 hiddensize2 = 15
 
 W1_shape = (hiddensize1,inputsize) #inputs to layer 1

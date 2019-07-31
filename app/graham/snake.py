@@ -66,38 +66,7 @@ class Point:
         if (direction == 'down'):
             return self.down()
 
-    def left(self):
-        '''Get the point to the left'''
-        return Point(self.x - 1, self.y)
 
-    def right(self):
-        '''Get the point to the right'''
-        return Point(self.x + 1, self.y)
-
-    def up(self):
-        '''Get the point above'''
-        return Point(self.x, self.y - 1)
-
-    def down(self):
-        '''Get the point below'''
-        return Point(self.x, self.y + 1)
-
-    def surrounding_four(self):
-        '''Get a list of the 4 surrounding points'''
-        return [self.left(), self.right(), self.up(), self.down()]
-
-    def surrounding_eight(self):
-        '''Get a list of the 8 surrounding points'''
-        return [self.left(), self.right(), self.up(), self.down(),
-                self.left().up(), self.left().down(), self.right().up(), self.right().down()]
-
-    def direction_of(self, point):
-        '''Returns (roughly) what direction a point is in'''
-        if self.x < point.x: return 'right'
-        if self.x > point.x: return 'left'
-        if self.y < point.y: return 'down'
-        if self.y > point.y: return 'up'
-        return 'left'  # whatever
 
 
 def point_from_string(string):
@@ -357,8 +326,18 @@ def move():
         right_blocked=0
     if 'left' in directions:
         left_blocked=0
+    #get the point on the enmey snake that is closest to us
+    enemy = board.enemies
+    tail_array = enemy.tail
+    danger_point = snake_head.closest(tail_array)
+    x_dang = snake_head.x - danger_point.x
+    y_dang = snake_head.y - danger_point.y
+    #findout if the enemy snake can eat us
+    tasty_snake=0
+    if enemy.length >= snake.length:
+        tasty_snake = 1
 
-    X = np.array([snake_head.x, snake_head.y, x_dist, y_dist,up_blocked,down_blocked,lef_blocked,right_blocked])
+    X = np.array([snake_head.x, snake_head.y, x_dist, y_dist,up_blocked,down_blocked,lef_blocked,right_blocked,x_dang,y_dang,tasty_snake])
     direction = nn.forward_propagation(X, weights)
     move_int = np.argmax(direction)
     if move_int == 0:
